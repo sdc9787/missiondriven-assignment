@@ -1,16 +1,19 @@
 import React from "react";
 
 export type ButtonVariant = "neutral" | "primary" | "outline";
-export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-  size?: ButtonSize;
   text: string;
 }
 
-// 기본 스타일 + 상태별(hover/active/disabled) Tailwind 클래스
-const baseClasses = "font-semibold transition-all";
+// 기본 스타일 + 반응형 크기 조정
+const baseClasses = `
+  font-semibold transition-all
+  px-3 py-2 text-[16px] rounded-[4px]
+  md:px-5 md:py-3 md:text-[18px] md:rounded-[6px]
+  lg:px-5 lg:py-4 lg:text-[20px] lg:rounded-[8px]
+`;
 
 // variant별 색상 매핑
 const variantClasses: Record<ButtonVariant, string> = {
@@ -34,16 +37,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   `,
 };
 
-// size별 padding + text-size 설정 (px/py + 폰트 크기)
-const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-3 py-2 text-[16px] rounded-[4px]",
-  md: "px-5 py-3 text-[18px] rounded-[6px]",
-  lg: "px-5 py-4 text-[20px] rounded-[8px]",
-};
-
-export function Button({ variant = "neutral", size = "md", disabled = false, className = "", text, ...rest }: ButtonProps) {
+export function Button({ variant = "neutral", disabled = false, className = "", text, ...rest }: ButtonProps) {
   return (
-    <button type="button" disabled={disabled} className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabled ? "cursor-not-allowed" : ""} ${className}`.trim().replace(/\s+/g, " ")} {...rest}>
+    <button type="button" disabled={disabled} className={`${baseClasses} ${variantClasses[variant]} ${disabled ? "cursor-not-allowed" : ""} ${className}`.trim().replace(/\s+/g, " ")} {...rest}>
       {text}
     </button>
   );
