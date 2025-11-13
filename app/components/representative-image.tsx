@@ -68,7 +68,7 @@ export function RepresentativeImage({ onImageChange, className = "" }: Represent
   return (
     <div className={className}>
       {/* 타이틀 */}
-      <h3 className="text-[18px] font-semibold text-foreground mb-3">대표 이미지</h3>
+      <h3 className="text-[22px] lg:text-[28px] font-bold text-foreground mb-3">대표 이미지</h3>
 
       {/* 이미지 업로드 영역 */}
       <div
