@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Textarea from "./components/textarea";
+import RepresentativeImage from "./components/representative-image";
 
 export default function Main() {
-  const [value, setValue] = useState("");
-
   return (
     <div>
-      <Textarea value={value} onChange={setValue} maxLength={80} placeholder="텍스트를 입력해주세요" errorMessage="최소 8자 이상 입력해주세요" />
+      <RepresentativeImage></RepresentativeImage>
     </div>
   );
 }
