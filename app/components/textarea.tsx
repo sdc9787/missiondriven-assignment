@@ -63,7 +63,7 @@ export function Textarea({ maxLength = 80, minLength = 8, errorMessage = "", pla
     <div className={`${className}`}>
       {/* Textarea 영역 */}
       <div className="relative flex">
-        <textarea ref={textareaRef} value={value} onChange={handleChange} placeholder={placeholder} maxLength={maxLength} className={`${baseClasses} ${defaultColorClasses} ${focusClasses} ${hasError ? errorClasses : ""}`.trim().replace(/\s+/g, " ")} {...rest} />
+        <textarea ref={textareaRef} value={value} onChange={handleChange} placeholder={placeholder} maxLength={maxLength} className={`h-[118px] ${baseClasses} ${defaultColorClasses} ${focusClasses} ${hasError ? errorClasses : ""}`.trim().replace(/\s+/g, " ")} {...rest} />
         {/* 글자수 카운터 */}
         <div className="absolute bottom-3 right-4 text-[14px] text-textarea-placeholder pointer-events-none">
           {value.length} / {maxLength}자 (최소 {minLength}자)
