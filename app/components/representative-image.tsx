@@ -15,9 +15,11 @@ const MAX_FILE_SIZE = 15 * 1024 * 1024; // 15MB
 
 export function RepresentativeImage({ onImageChange, className = "" }: RepresentativeImageProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [error, setError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  //TODO : 에러 메세지 toast으로 변경
+
+  // 파일 유효성 검사 함수
   const validateFile = (file: File): string | null => {
     // 파일 형식 검사
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -32,9 +34,9 @@ export function RepresentativeImage({ onImageChange, className = "" }: Represent
     return null;
   };
 
+  // 파일 선택 핸들러
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    setError("");
 
     if (!file) {
       return;
@@ -43,7 +45,6 @@ export function RepresentativeImage({ onImageChange, className = "" }: Represent
     // 파일 유효성 검사
     const validationError = validateFile(file);
     if (validationError) {
-      setError(validationError);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -59,6 +60,7 @@ export function RepresentativeImage({ onImageChange, className = "" }: Represent
     reader.readAsDataURL(file);
   };
 
+  // 업로드 영역 클릭 핸들러
   const handleClick = () => {
     fileInputRef.current?.click();
   };
