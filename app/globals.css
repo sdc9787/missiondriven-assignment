@@ -65,6 +65,13 @@
   --btn-outline-disabled-bg: #e5e5e5;
   --btn-outline-disabled-fg: #8f8f8f;
   --btn-outline-disabled-border: #d7d7d7;
+
+  /* text area 색상 모음*/
+  --textarea-placeholder: #8f8f8f;
+  --textarea-fg: #121212;
+  --textarea-border: #e5e5e5;
+  --textarea-focus: #03c124;
+  --textarea-error: #e82929;
 }
 
 body {
