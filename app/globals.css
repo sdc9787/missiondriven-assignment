@@ -16,62 +16,62 @@
 
   /* 버튼 컬러 토큰 */
   /* Neutral(어두운 채움) */
-  --btn-neutral-bg: #323232; /* TODO: 정확 값으로 교체 */
-  --btn-neutral-fg: #ffffff;
-  --btn-neutral-border: transparent;
+  --color-btn-neutral-bg: #323232; /* TODO: 정확 값으로 교체 */
+  --color-btn-neutral-fg: #ffffff;
+  --color-btn-neutral-border: transparent;
 
-  --btn-neutral-hover-bg: #565656;
-  --btn-neutral-hover-fg: #ffffff;
-  --btn-neutral-hover-border: transparent;
+  --color-btn-neutral-hover-bg: #565656;
+  --color-btn-neutral-hover-fg: #ffffff;
+  --color-btn-neutral-hover-border: transparent;
 
-  --btn-neutral-active-bg: #121212;
-  --btn-neutral-active-fg: #ffffff;
-  --btn-neutral-active-border: transparent;
+  --color-btn-neutral-active-bg: #121212;
+  --color-btn-neutral-active-fg: #ffffff;
+  --color-btn-neutral-active-border: transparent;
 
-  --btn-neutral-disabled-bg: #d7d7d7;
-  --btn-neutral-disabled-fg: #bdbdbd;
-  --btn-neutral-disabled-border: transparent;
+  --color-btn-neutral-disabled-bg: #d7d7d7;
+  --color-btn-neutral-disabled-fg: #bdbdbd;
+  --color-btn-neutral-disabled-border: transparent;
 
   /* Primary(그린 채움) */
-  --btn-primary-bg: #03c124;
-  --btn-primary-fg: #ffffff;
-  --btn-primary-border: transparent;
+  --color-btn-primary-bg: #03c124;
+  --color-btn-primary-fg: #ffffff;
+  --color-btn-primary-border: transparent;
 
-  --btn-primary-hover-bg: #02891a;
-  --btn-primary-hover-fg: #ffffff;
-  --btn-primary-hover-border: transparent;
+  --color-btn-primary-hover-bg: #02891a;
+  --color-btn-primary-hover-fg: #ffffff;
+  --color-btn-primary-hover-border: transparent;
 
-  --btn-primary-active-bg: #026a14;
-  --btn-primary-active-fg: #ffffff;
-  --btn-primary-active-border: transparent;
+  --color-btn-primary-active-bg: #026a14;
+  --color-btn-primary-active-fg: #ffffff;
+  --color-btn-primary-active-border: transparent;
 
-  --btn-primary-disabled-bg: #d7d7d7;
-  --btn-primary-disabled-fg: #ffffff;
-  --btn-primary-disabled-border: transparent;
+  --color-btn-primary-disabled-bg: #d7d7d7;
+  --color-btn-primary-disabled-fg: #ffffff;
+  --color-btn-primary-disabled-border: transparent;
 
   /* Outline - Neutral */
-  --btn-outline-bg: #f7f7f8;
-  --btn-outline-fg: #323232;
-  --btn-outline-border: #e5e5e5;
+  --color-btn-outline-bg: #f7f7f8;
+  --color-btn-outline-fg: #323232;
+  --color-btn-outline-border: #e5e5e5;
 
-  --btn-outline-hover-bg: #e5e5e5;
-  --btn-outline-hover-fg: #323232;
-  --btn-outline-hover-border: #bababa;
+  --color-btn-outline-hover-bg: #e5e5e5;
+  --color-btn-outline-hover-fg: #323232;
+  --color-btn-outline-hover-border: #bababa;
 
-  --btn-outline-active-bg: #e6f9e9;
-  --btn-outline-active-fg: #03c124;
-  --btn-outline-active-border: #03c124;
+  --color-btn-outline-active-bg: #e6f9e9;
+  --color-btn-outline-active-fg: #03c124;
+  --color-btn-outline-active-border: #03c124;
 
-  --btn-outline-disabled-bg: #e5e5e5;
-  --btn-outline-disabled-fg: #8f8f8f;
-  --btn-outline-disabled-border: #d7d7d7;
+  --color-btn-outline-disabled-bg: #e5e5e5;
+  --color-btn-outline-disabled-fg: #8f8f8f;
+  --color-btn-outline-disabled-border: #d7d7d7;
 
   /* text area 색상 모음*/
-  --textarea-placeholder: #8f8f8f;
-  --textarea-fg: #121212;
-  --textarea-border: #e5e5e5;
-  --textarea-focus: #03c124;
-  --textarea-error: #e82929;
+  --color-textarea-placeholder: #8f8f8f;
+  --color-textarea-fg: #121212;
+  --color-textarea-border: #e5e5e5;
+  --color-textarea-focus: #03c124;
+  --color-textarea-error: #e82929;
 }
 
 body {

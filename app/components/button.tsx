@@ -15,22 +15,22 @@ const baseClasses = "font-semibold transition-all";
 // variant별 색상 매핑
 const variantClasses: Record<ButtonVariant, string> = {
   neutral: `
-    bg-[var(--btn-neutral-bg)] text-[var(--btn-neutral-fg)] border border-[var(--btn-neutral-border)]
-    hover:bg-[var(--btn-neutral-hover-bg)] hover:text-[var(--btn-neutral-hover-fg)]
-    active:bg-[var(--btn-neutral-active-bg)] active:text-[var(--btn-neutral-active-fg)]
-    disabled:bg-[var(--btn-neutral-disabled-bg)] disabled:text-[var(--btn-neutral-disabled-fg)] disabled:border-[var(--btn-neutral-disabled-border)]
+    bg-btn-neutral-bg text-btn-neutral-fg border border-btn-neutral-border
+    hover:bg-btn-neutral-hover-bg hover:text-btn-neutral-hover-fg
+    active:bg-btn-neutral-active-bg active:text-btn-neutral-active-fg
+    disabled:bg-btn-neutral-disabled-bg disabled:text-btn-neutral-disabled-fg disabled:border-btn-neutral-disabled-border
   `,
   primary: `
-    bg-[var(--btn-primary-bg)] text-[var(--btn-primary-fg)] border border-[var(--btn-primary-border)]
-    hover:bg-[var(--btn-primary-hover-bg)] hover:text-[var(--btn-primary-hover-fg)]
-    active:bg-[var(--btn-primary-active-bg)] active:text-[var(--btn-primary-active-fg)]
-    disabled:bg-[var(--btn-primary-disabled-bg)] disabled:text-[var(--btn-primary-disabled-fg)] disabled:border-[var(--btn-primary-disabled-border)]
+    bg-btn-primary-bg text-btn-primary-fg border border-btn-primary-border
+    hover:bg-btn-primary-hover-bg hover:text-btn-primary-hover-fg
+    active:bg-btn-primary-active-bg active:text-btn-primary-active-fg
+    disabled:bg-btn-primary-disabled-bg disabled:text-btn-primary-disabled-fg disabled:border-btn-primary-disabled-border
   `,
   outline: `
-    bg-[var(--btn-outline-bg)] text-[var(--btn-outline-fg)] border border-[var(--btn-outline-border)]
-    hover:bg-[var(--btn-outline-hover-bg)] hover:text-[var(--btn-outline-hover-fg)] hover:border-[var(--btn-outline-hover-border)]
-    active:bg-[var(--btn-outline-active-bg)] active:text-[var(--btn-outline-active-fg)] active:border-[var(--btn-outline-active-border)]
-    disabled:bg-[var(--btn-outline-disabled-bg)] disabled:text-[var(--btn-outline-disabled-fg)] disabled:border-[var(--btn-outline-disabled-border)]
+    bg-btn-outline-bg text-btn-outline-fg border border-btn-outline-border
+    hover:bg-btn-outline-hover-bg hover:text-btn-outline-hover-fg hover:border-btn-outline-hover-border
+    active:bg-btn-outline-active-bg active:text-btn-outline-active-fg active:border-btn-outline-active-border
+    disabled:bg-btn-outline-disabled-bg disabled:text-btn-outline-disabled-fg disabled:border-btn-outline-disabled-border
   `,
 };
 
