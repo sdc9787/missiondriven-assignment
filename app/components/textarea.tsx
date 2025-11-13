@@ -26,7 +26,6 @@ const defaultColorClasses = `
   placeholder:text-textarea-placeholder
   border-2 border-textarea-border
   caret-textarea-fg
-
   [&::-webkit-scrollbar-track]:bg-transparent
   [&::-webkit-scrollbar-thumb]:bg-textarea-border
 `;
@@ -63,7 +62,7 @@ export function Textarea({ maxLength = 80, minLength = 8, errorMessage = "", pla
   return (
     <div className={`${className}`}>
       {/* Textarea 영역 */}
-      <div className="relative">
+      <div className="relative flex">
         <textarea ref={textareaRef} value={value} onChange={handleChange} placeholder={placeholder} maxLength={maxLength} className={`${baseClasses} ${defaultColorClasses} ${focusClasses} ${hasError ? errorClasses : ""}`.trim().replace(/\s+/g, " ")} {...rest} />
         {/* 글자수 카운터 */}
         <div className="absolute bottom-3 right-4 text-[14px] text-textarea-placeholder pointer-events-none">
@@ -72,7 +71,7 @@ export function Textarea({ maxLength = 80, minLength = 8, errorMessage = "", pla
       </div>
 
       {/* 에러 메시지 */}
-      {hasError && errorMessage && <p className="mt-2 font-medium text-[16px] text-textarea-error">{errorMessage}</p>}
+      {hasError && errorMessage && <p className="mt-1 font-medium text-[16px] text-textarea-error">{errorMessage}</p>}
     </div>
   );
 }
