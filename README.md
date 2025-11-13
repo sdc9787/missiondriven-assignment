@@ -34,3 +34,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Run with Docker
+
+This repo includes a Dockerfile and Compose configs for both development and production.
+
+### Development
+
+Requirements: Docker Desktop.
+
+On Windows PowerShell:
+
+```powershell
+cd "C:\Users\sdc9787\Desktop\github\missiondriven-assignment"
+docker compose up --build
+```
+
+- App will be available at http://localhost:3000
+- Source code is mounted into the container with hot-reload. If file changes are not detected on Windows, we enable polling in compose.
+
+Stop:
+
+```powershell
+docker compose down
+```
+
+### Production (local)
+
+Build and run the optimized image:
+
+```powershell
+cd "C:\Users\sdc9787\Desktop\github\missiondriven-assignment"
+docker compose -f docker-compose.prod.yml up --build -d
+```
+
+Stop:
+
+```powershell
+docker compose -f docker-compose.prod.yml down
+```
