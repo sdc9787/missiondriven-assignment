@@ -6,7 +6,7 @@ import RepresentativeImage from "./components/representative-image";
 
 export default function Main() {
   return (
-    <div className="w-dvw">
+    <div>
       <Header></Header>
       <div className="flex flex-col gap-10 px-5 py-10 max-w-[1100px] mx-auto">
         <RepresentativeImage></RepresentativeImage>

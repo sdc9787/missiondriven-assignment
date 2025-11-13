@@ -215,7 +215,7 @@ export function AdditionalImages({ className = "" }: AdditionalImagesProps) {
           <div
             key={image.id}
             className="
-              relative shrink-0 w-[calc(50vw-24px)] aspect-square
+              relative shrink-0 w-[30vw] aspect-square
               md:w-full
               rounded-lg overflow-hidden
               group
@@ -256,7 +256,7 @@ export function AdditionalImages({ className = "" }: AdditionalImagesProps) {
               type="button"
               onClick={handleUploadClick}
               className="
-                shrink-0 w-[calc(50vw-24px)] aspect-square
+                shrink-0 w-[30vw] aspect-square
                 md:w-full
                 bg-btn-outline-bg rounded-lg
                 border-2 border-dashed border-[#e5e5e5]
