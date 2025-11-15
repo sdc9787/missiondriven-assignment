@@ -53,7 +53,7 @@ export function CategoryModal({ selectedCategories, onToggle, className = "" }: 
           <br />
           콘텐츠를 만드시나요?
         </h2>
-        <p className="text-[16px] md:text-[18px] text-[#767676] font-medium">최대 2개까지 선택 가능해요.</p>
+        <p className="text-[16px] md:text-[18px] text-[#767676] font-medium">최대 2개까지 선택 가능합니다.</p>
       </div>
 
       {/* 카테고리 그리드 */}
