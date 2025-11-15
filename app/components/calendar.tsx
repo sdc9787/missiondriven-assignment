@@ -26,7 +26,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
   return (
     <div className={className}>
       {/* 달력 */}
-      <div className="bg-white w-[280px] h-[310px] md:w-[330px] md:h-[370px]">
+      <div className="bg-white w-[280px] md:w-[330px] h-full">
         <DayPicker
           mode="single"
           selected={selectedDate}
@@ -41,15 +41,15 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
             month: "w-full",
             month_caption: "flex justify-start items-center py-4 relative",
             caption_label: "text-[16px] font-semibold text-black",
-            nav: "flex items-center gap-[2px] absolute top-8 right-4",
-            button_previous: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center",
-            button_next: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center",
+            nav: "flex items-center gap-[2px] absolute top-8 right-4 z-10",
+            button_previous: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
+            button_next: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
             month_grid: "w-full border-collapse border-spacing-0",
             weekdays: "flex mb-3",
             weekday: "text-black font-semibold text-[16px] flex-1 text-center py-2",
             week: "flex w-full",
             day: "flex-1 text-center flex items-center justify-center [&[aria-selected='true']_button]:hover:bg-[#03C124]!",
-            day_button: "w-full h-10 flex items-center justify-center text-[18px] font-medium rounded-lg hover:bg-[#f5f5f5]",
+            day_button: "w-full h-10 flex items-center justify-center text-[18px] font-medium rounded-lg hover:bg-[#f5f5f5] cursor-pointer",
             selected: "bg-[#03C124]! text-white! font-bold! rounded-lg z-10",
             today: "",
             outside: "text-[#8f8f8f]",
