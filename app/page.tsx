@@ -6,6 +6,7 @@ import ActivityMethod from "./components/activity-method";
 import CalendarComponent from "./components/calendar";
 import { Category, CategoryModal } from "./components/category";
 import ContentTitle from "./components/content-title";
+import DetailInfo from "./components/detail-info";
 import Header from "./components/header";
 import RepresentativeImage from "./components/representative-image";
 import toast from "react-hot-toast";
@@ -68,7 +69,8 @@ export default function Main() {
             <Category selectedCategories={selectedCategories} onOpenModal={handleOpenCategoryModal} />
             <ContentTitle value={contentTitle} onChange={setContentTitle} />
             <ActivityMethod value={activityMethod} onChange={setActivityMethod} />
-            <CalendarComponent value={selectedDate} onChange={setSelectedDate} />
+            {/* <CalendarComponent value={selectedDate} onChange={setSelectedDate} /> */}
+            <DetailInfo />
           </div>
         </div>
       )}
