@@ -55,12 +55,12 @@ export default function Main() {
       <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : true} />
 
       {view === "form" && (
-        <div className="flex justify-center items-start max-w-[1100px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-center md:items-start max-w-[1100px] mx-auto">
           <div className="flex flex-1 flex-col gap-10 px-5 py-10 ">
             <RepresentativeImage />
             <AdditionalImages />
           </div>
-          <div className="flex flex-1 flex-col gap-10 px-5 py-10">
+          <div className="flex flex-1 flex-col gap-10 px-5 md:py-10">
             <Category selectedCategories={selectedCategories} onOpenModal={handleOpenCategoryModal} />
             <ContentTitle value={contentTitle} onChange={setContentTitle} />
           </div>
