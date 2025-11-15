@@ -20,18 +20,17 @@ export default function Main() {
 
   // 카테고리 선택/해제 핸들러 (임시 상태에서 작업)
   const handleToggleCategory = (category: string) => {
+    if (tempSelectedCategories.length >= 2 && !tempSelectedCategories.includes(category)) {
+      // 이미 2개가 선택된 상태에서 새로운 카테고리를 선택하려고 할 때
+      toast.error("최대 2개의 카테고리만 선택할 수 있습니다.");
+      return;
+    }
     setTempSelectedCategories((prev) => {
+      // 이미 선택된 경우 제거
       if (prev.includes(category)) {
-        // 이미 선택된 경우 제거
         return prev.filter((c) => c !== category);
-      } else {
-        // 선택되지 않은 경우 추가 (최대 2개)
-        if (prev.length >= 2) {
-          toast("최대 2개의 카테고리만 선택할 수 있습니다.");
-          return prev; // 이미 2개가 선택되어 있으면 추가하지 않음
-        }
-        return [...prev, category];
       }
+      return [...prev, category];
     });
   };
 
