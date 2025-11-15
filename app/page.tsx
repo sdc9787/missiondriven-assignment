@@ -51,7 +51,7 @@ export default function Main() {
   };
 
   return (
-    <div className="pt-[65px]">
+    <div className="pt-[65px] pb-25 md:pb-0">
       <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : true} />
 
       {view === "form" && (
