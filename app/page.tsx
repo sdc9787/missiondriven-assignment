@@ -10,10 +10,10 @@ export default function Main() {
 
   return (
     <div>
-      <Header></Header>
+      <Header view={view} onBack={() => setView("form")} />
       <div className="flex flex-col gap-10 px-5 py-10 max-w-[1100px] mx-auto">
-        <RepresentativeImage></RepresentativeImage>
-        <AdditionalImages></AdditionalImages>
+        <RepresentativeImage />
+        <AdditionalImages />
       </div>
     </div>
   );
