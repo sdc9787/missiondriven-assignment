@@ -14,7 +14,7 @@ interface CalendarComponentProps {
 }
 
 export function CalendarComponent({ value = null, onChange, className = "" }: CalendarComponentProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(value || undefined);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(value || new Date());
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
