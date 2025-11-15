@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AdditionalImages from "./components/additional-images";
 import { Category, CategoryModal } from "./components/category";
+import ContentTitle from "./components/content-title";
 import Header from "./components/header";
 import RepresentativeImage from "./components/representative-image";
 import toast from "react-hot-toast";
@@ -11,6 +12,7 @@ export default function Main() {
   const [view, setView] = useState<"form" | "category">("form"); // 현재 뷰 상태
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // 선택된 카테고리들 (최대 2개)
   const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([]); // 임시 선택 카테고리
+  const [contentTitle, setContentTitle] = useState<string>(""); // 콘텐츠 제목
 
   const handleOpenCategoryModal = () => {
     // 모달 열 때 현재 선택된 카테고리를 임시 상태에 복사
@@ -49,17 +51,18 @@ export default function Main() {
   };
 
   return (
-    <div>
+    <div className="pt-[65px] pb-25 md:pb-0">
       <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : true} />
 
       {view === "form" && (
-        <div className="flex justify-center items-start max-w-[1100px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-center md:items-start max-w-[1100px] mx-auto">
           <div className="flex flex-1 flex-col gap-10 px-5 py-10 ">
             <RepresentativeImage />
             <AdditionalImages />
           </div>
-          <div className="flex flex-1 flex-col gap-10 px-5 py-10">
+          <div className="flex flex-1 flex-col gap-10 px-5 md:py-10">
             <Category selectedCategories={selectedCategories} onOpenModal={handleOpenCategoryModal} />
+            <ContentTitle value={contentTitle} onChange={setContentTitle} />
           </div>
         </div>
       )}

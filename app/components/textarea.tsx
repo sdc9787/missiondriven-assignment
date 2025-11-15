@@ -13,7 +13,7 @@ export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTex
 
 // 기본 스타일
 const baseClasses = `
-  h-[118px]
+  h-[118px] md:h-[138px]
   w-full px-4 py-3 rounded-lg resize-none
   text-[18px] leading-relaxed font-medium
   transition-colors duration-200
@@ -54,7 +54,11 @@ export function Textarea({ maxLength = 80, minLength = 8, errorMessage = "", pla
   const hasError = value.length > 0 && value.length < minLength;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
+    let newValue = e.target.value;
+
+    // 연속 공백 방지: 두 개 이상의 공백을 하나로 변환
+    newValue = newValue.replace(/\s{2,}/g, " ");
+
     if (newValue.length <= maxLength) {
       onChange(newValue);
     }
