@@ -33,6 +33,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
           onSelect={handleDateSelect}
           locale={ko}
           showOutsideDays={true}
+          disabled={{ before: new Date() }}
           className="font-pretendard!"
           classNames={{
             root: "px-4 py-5 relative",
@@ -50,7 +51,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
             day: "flex-1 text-center flex items-center justify-center [&[aria-selected='true']_button]:hover:bg-[#03C124]!",
             day_button: "w-full h-10 flex items-center justify-center text-[18px] font-medium rounded-lg hover:bg-[#f5f5f5]",
             selected: "bg-[#03C124]! text-white! font-bold! rounded-lg z-10",
-            today: "text-[#03C124] font-semibold",
+            today: "",
             outside: "text-[#8f8f8f]",
             disabled: "text-[#8f8f8f] opacity-50",
           }}
