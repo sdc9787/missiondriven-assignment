@@ -13,7 +13,7 @@ interface TimeInputProps {
   onEndTimeUpdate?: (time: TimeData) => void;
 }
 
-export function TimeInput({ label, time, onUpdate, isEndTime = false, startTime, endTime, onEndTimeUpdate }: TimeInputProps) {
+export function TimeInput({ label, time, onUpdate, isEndTime = false, startTime }: TimeInputProps) {
   // 시간 검증 함수
   const validateAndUpdate = (newTime: TimeData) => {
     // 종료 시간인 경우: 시작 시간보다 빠르면 안됨

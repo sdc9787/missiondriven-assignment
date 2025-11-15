@@ -136,7 +136,7 @@ export function DetailInfo() {
 
           {/* 날짜 선택 */}
           <div className="flex items-center gap-3 md:gap-6 mb-4">
-            <span className="text-[16px] md:text-[18px] font-semibold text-[#565656] whitespace-nowrap">날짜 선택</span>
+            <span className="text-[16px] md:text-[18px] font-semibold text-btn-neutral-hover-bg whitespace-nowrap">날짜 선택</span>
             <DateSelectButton sessionId={session.id} date={session.date} onDateClick={handleDateClick} formatDate={formatDate} />
           </div>
 
