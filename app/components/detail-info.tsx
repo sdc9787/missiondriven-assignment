@@ -6,6 +6,7 @@ import Textarea from "./textarea";
 import Image from "next/image";
 import { useModalStore } from "../store/useModalStore";
 import CalendarComponent from "./calendar";
+import toast from "react-hot-toast";
 
 interface Session {
   id: number;
@@ -79,9 +80,134 @@ export function DetailInfo() {
     return `${year}년 ${month}월 ${day}일`;
   };
 
+  // 12시간제를 24시간제로 변환 (비교용)
+  const convertTo24Hour = (period: string, hour: string) => {
+    const hourNum = parseInt(hour);
+    if (period === "오후" && hourNum !== 12) {
+      return hourNum + 12;
+    }
+    if (period === "오전" && hourNum === 12) {
+      return 0;
+    }
+    return hourNum;
+  };
+
+  // 시간 비교 함수 (start가 end보다 이후면 true)
+  const isStartAfterEnd = (startTime: Session["startTime"], endTime: Session["endTime"]) => {
+    const startHour24 = convertTo24Hour(startTime.period, startTime.hour);
+    const endHour24 = convertTo24Hour(endTime.period, endTime.hour);
+    const startMinute = parseInt(startTime.minute);
+    const endMinute = parseInt(endTime.minute);
+
+    if (startHour24 > endHour24) return true;
+    if (startHour24 === endHour24 && startMinute >= endMinute) return true;
+    return false;
+  };
+
+  // 시작 시간 +1시간 계산
+  const addOneHour = (time: Session["startTime"]): Session["endTime"] => {
+    let hour = parseInt(time.hour);
+    let period = time.period;
+
+    // 오전 11시 -> 오후 12시
+    if (hour === 11 && period === "오전") {
+      return {
+        period: "오후",
+        hour: "12",
+        minute: time.minute,
+      };
+    }
+
+    // 오후 11시 -> 오전 12시 (다음날)
+    if (hour === 11 && period === "오후") {
+      return {
+        period: "오전",
+        hour: "12",
+        minute: time.minute,
+      };
+    }
+
+    // 오전 12시 -> 오후 1시
+    if (hour === 12 && period === "오전") {
+      return {
+        period: "오후",
+        hour: "01",
+        minute: time.minute,
+      };
+    }
+
+    // 오후 12시 -> 오후 1시
+    if (hour === 12 && period === "오후") {
+      return {
+        period: "오후",
+        hour: "01",
+        minute: time.minute,
+      };
+    }
+
+    // 일반적인 경우: 1~10시는 단순히 +1
+    hour += 1;
+
+    return {
+      period,
+      hour: String(hour).padStart(2, "0"),
+      minute: time.minute,
+    };
+  };
+
+  // 종료 시간 검증 함수 (onBlur에서 사용)
+  const validateEndTime = (id: number) => {
+    const targetSession = sessions.find((s) => s.id === id);
+    if (!targetSession) return;
+
+    if (isStartAfterEnd(targetSession.startTime, targetSession.endTime)) {
+      // Toast는 setSessions 밖에서 호출
+      toast.error("시작 시간보다 종료시간은 빠를 수 없습니다.");
+
+      // 종료 시간을 시작 시간 +1시간으로 자동 수정
+      setSessions((prevSessions) => {
+        return prevSessions.map((session) => {
+          if (session.id !== id) return session;
+          return {
+            ...session,
+            endTime: addOneHour(session.startTime),
+          };
+        });
+      });
+    }
+  };
+
   // 세션 정보 업데이트 함수
   const updateSession = (id: number, field: string, value: any) => {
-    setSessions(sessions.map((session) => (session.id === id ? { ...session, [field]: value } : session)));
+    setSessions((prevSessions) => {
+      return prevSessions.map((session) => {
+        if (session.id !== id) return session;
+
+        const updatedSession = { ...session, [field]: value };
+
+        // 시작 시간 업데이트 처리
+        if (field === "startTime") {
+          const isPeriodChanged = value.period !== session.startTime.period;
+          const isHourChanged = value.hour !== session.startTime.hour;
+
+          // 오전/오후 토글만 변경된 경우
+          if (isPeriodChanged && !isHourChanged && value.minute === session.startTime.minute) {
+            // 종료 시간의 오전/오후도 동일하게 변경
+            updatedSession.endTime = {
+              ...session.endTime,
+              period: value.period,
+            };
+          }
+          // 시각(hour)이 변경된 경우
+          else if (isHourChanged || isPeriodChanged) {
+            // 종료 시간을 시작 시간 +1시간으로 자동 설정
+            updatedSession.endTime = addOneHour(value);
+          }
+        }
+
+        return updatedSession;
+      });
+    });
   };
 
   return (
@@ -124,7 +250,19 @@ export function DetailInfo() {
                 value={session.startTime.hour}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, "");
-                  if (value === "" || (parseInt(value) >= 1 && parseInt(value) <= 12)) {
+                  if (value === "") {
+                    updateSession(session.id, "startTime", { ...session.startTime, hour: "" });
+                  } else if (parseInt(value) >= 1 && parseInt(value) <= 12) {
+                    updateSession(session.id, "startTime", { ...session.startTime, hour: value });
+                  }
+                }}
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  // 포커스를 잃을 때 빈 값이면 기본값으로 설정
+                  if (value === "") {
+                    updateSession(session.id, "startTime", { ...session.startTime, hour: "10" });
+                  } else {
+                    // 한 자리 숫자면 앞에 0을 붙임
                     updateSession(session.id, "startTime", { ...session.startTime, hour: value.padStart(2, "0") });
                   }
                 }}
@@ -138,7 +276,19 @@ export function DetailInfo() {
                 value={session.startTime.minute}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, "");
-                  if (value === "" || parseInt(value) <= 59) {
+                  if (value === "") {
+                    updateSession(session.id, "startTime", { ...session.startTime, minute: "" });
+                  } else if (parseInt(value) <= 59) {
+                    updateSession(session.id, "startTime", { ...session.startTime, minute: value });
+                  }
+                }}
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  // 포커스를 잃을 때 빈 값이면 기본값으로 설정
+                  if (value === "") {
+                    updateSession(session.id, "startTime", { ...session.startTime, minute: "00" });
+                  } else {
+                    // 한 자리 숫자면 앞에 0을 붙임
                     updateSession(session.id, "startTime", { ...session.startTime, minute: value.padStart(2, "0") });
                   }
                 }}
@@ -158,7 +308,19 @@ export function DetailInfo() {
               <button
                 type="button"
                 className="px-2 md:px-3 py-[7px] md:py-[5px] text-[14px] md:text-[16px] font-medium bg-[#f7f7f8] text-[#323232] border border-[#e5e5e5] rounded-md"
-                onClick={() => updateSession(session.id, "endTime", { ...session.endTime, period: session.endTime.period === "오전" ? "오후" : "오전" })}>
+                onClick={() => {
+                  const newPeriod = session.endTime.period === "오전" ? "오후" : "오전";
+                  const newEndTime = { ...session.endTime, period: newPeriod };
+
+                  // 변경 후 시간 검증
+                  if (isStartAfterEnd(session.startTime, newEndTime)) {
+                    toast.error("시작 시간보다 종료시간은 빠를 수 없습니다.");
+                    // 종료 시간을 시작 시간 +1시간으로 자동 수정
+                    updateSession(session.id, "endTime", addOneHour(session.startTime));
+                  } else {
+                    updateSession(session.id, "endTime", newEndTime);
+                  }
+                }}>
                 {session.endTime.period}
               </button>
               <input
@@ -166,12 +328,27 @@ export function DetailInfo() {
                 value={session.endTime.hour}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, "");
-                  if (value === "" || (parseInt(value) >= 1 && parseInt(value) <= 12)) {
-                    updateSession(session.id, "endTime", { ...session.endTime, hour: value.padStart(2, "0") });
+                  if (value === "") {
+                    updateSession(session.id, "endTime", { ...session.endTime, hour: "" });
+                  } else if (parseInt(value) >= 1 && parseInt(value) <= 12) {
+                    updateSession(session.id, "endTime", { ...session.endTime, hour: value });
                   }
                 }}
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  // 포커스를 잃을 때 빈 값이면 시작 시간 +1시간으로 설정
+                  if (value === "") {
+                    const newEndTime = addOneHour(session.startTime);
+                    updateSession(session.id, "endTime", newEndTime);
+                  } else {
+                    // 한 자리 숫자면 앞에 0을 붙임
+                    updateSession(session.id, "endTime", { ...session.endTime, hour: value.padStart(2, "0") });
+                  }
+                  // 입력 완료 후 시간 검증
+                  validateEndTime(session.id);
+                }}
                 className="w-full flex-1 px-2 md:px-4 text-[16px] md:text-[20px] text-center font-medium"
-                placeholder="10"
+                placeholder="11"
                 maxLength={2}
               />
               <span className="text-[16px] md:text-[18px] font-medium">:</span>
@@ -180,9 +357,23 @@ export function DetailInfo() {
                 value={session.endTime.minute}
                 onChange={(e) => {
                   const value = e.target.value.replace(/[^0-9]/g, "");
-                  if (value === "" || parseInt(value) <= 59) {
+                  if (value === "") {
+                    updateSession(session.id, "endTime", { ...session.endTime, minute: "" });
+                  } else if (parseInt(value) <= 59) {
+                    updateSession(session.id, "endTime", { ...session.endTime, minute: value });
+                  }
+                }}
+                onBlur={(e) => {
+                  const value = e.target.value;
+                  // 포커스를 잃을 때 빈 값이면 기본값으로 설정
+                  if (value === "") {
+                    updateSession(session.id, "endTime", { ...session.endTime, minute: "00" });
+                  } else {
+                    // 한 자리 숫자면 앞에 0을 붙임
                     updateSession(session.id, "endTime", { ...session.endTime, minute: value.padStart(2, "0") });
                   }
+                  // 입력 완료 후 시간 검증
+                  validateEndTime(session.id);
                 }}
                 className="w-full flex-1 px-2 md:px-4 text-[16px] md:text-[20px] text-center font-medium"
                 placeholder="00"
