@@ -49,7 +49,7 @@ export default function Main() {
 
   return (
     <div>
-      <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : false} />
+      <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : true} />
 
       {view === "form" && (
         <div className="flex justify-center items-start max-w-[1100px] mx-auto">
