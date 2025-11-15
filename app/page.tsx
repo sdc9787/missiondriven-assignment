@@ -3,8 +3,10 @@
 import { useState } from "react";
 import AdditionalImages from "./components/additional-images";
 import ActivityMethod from "./components/activity-method";
+import CalendarComponent from "./components/calendar";
 import { Category, CategoryModal } from "./components/category";
 import ContentTitle from "./components/content-title";
+import DetailInfo from "./components/detail-info";
 import Header from "./components/header";
 import RepresentativeImage from "./components/representative-image";
 import toast from "react-hot-toast";
@@ -15,6 +17,7 @@ export default function Main() {
   const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([]); // 임시 선택 카테고리
   const [contentTitle, setContentTitle] = useState<string>(""); // 콘텐츠 제목
   const [activityMethod, setActivityMethod] = useState<"online" | "offline" | null>(null); // 활동 방식
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null); // 선택된 날짜
 
   const handleOpenCategoryModal = () => {
     // 모달 열 때 현재 선택된 카테고리를 임시 상태에 복사
@@ -66,6 +69,8 @@ export default function Main() {
             <Category selectedCategories={selectedCategories} onOpenModal={handleOpenCategoryModal} />
             <ContentTitle value={contentTitle} onChange={setContentTitle} />
             <ActivityMethod value={activityMethod} onChange={setActivityMethod} />
+            {/* <CalendarComponent value={selectedDate} onChange={setSelectedDate} /> */}
+            <DetailInfo />
           </div>
         </div>
       )}

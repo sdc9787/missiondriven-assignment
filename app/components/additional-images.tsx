@@ -266,7 +266,7 @@ export function AdditionalImages({ className = "" }: AdditionalImagesProps) {
                 hover:border-btn-outline-hover-border hover:bg-[#f0f0f1]
               ">
               {/* 아이콘 */}
-              <Image src="icon/image-plus.svg" width={60} height={60} className="w-[32px] h-[32px] md:w-[60px] md:h-[60px]" alt="이미지 추가" />
+              <Image src="icon/image-plus.svg" width={60} height={60} className="w-8 h-8 md:w-[60px] md:h-[60px]" alt="이미지 추가" />
             </button>
           ))}
       </div>
