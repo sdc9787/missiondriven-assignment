@@ -54,7 +54,11 @@ export function Textarea({ maxLength = 80, minLength = 8, errorMessage = "", pla
   const hasError = value.length > 0 && value.length < minLength;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
+    let newValue = e.target.value;
+
+    // 연속 공백 방지: 두 개 이상의 공백을 하나로 변환
+    newValue = newValue.replace(/\s{2,}/g, " ");
+
     if (newValue.length <= maxLength) {
       onChange(newValue);
     }
