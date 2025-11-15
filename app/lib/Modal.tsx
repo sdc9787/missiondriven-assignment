@@ -69,7 +69,9 @@ export const Modal = () => {
   // 기존 중앙 모달 (백드랍)
   return createPortal(
     <div ref={modalRef} onClick={handleClickOutside} className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div onClick={(e) => e.stopPropagation()}>{content}</div>
+      <div onClick={(e) => e.stopPropagation()} className="w-full flex justify-center p-4">
+        {content}
+      </div>
     </div>,
     document.body
   );

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "./button";
 import Textarea from "./textarea";
 import Image from "next/image";
+import { useModalStore } from "../store/useModalStore";
 
 interface Session {
   id: number;
@@ -24,6 +25,8 @@ export function DetailInfo() {
     },
   ]);
 
+  const { open: openModal, close: closeModal } = useModalStore();
+
   const handleAddSession = () => {
     const newSession: Session = {
       id: Date.now(),
@@ -37,6 +40,11 @@ export function DetailInfo() {
 
   const handleDeleteSession = (id: number) => {
     setSessions(sessions.filter((session) => session.id !== id));
+    closeModal();
+  };
+
+  const handleDeleteClick = (id: number) => {
+    openModal(<DeleteConfirmModal onConfirm={() => handleDeleteSession(id)} onCancel={closeModal} />, undefined, undefined, "center");
   };
 
   const updateSession = (id: number, field: string, value: any) => {
@@ -53,7 +61,7 @@ export function DetailInfo() {
         <div key={session.id} className="bg-btn-outline-bg px-4 md:px-5 py-5 md:py-7 rounded-lg relative">
           {/* 삭제 버튼 (2개 이상일 때만 표시) */}
           {sessions.length > 1 && (
-            <button type="button" className="absolute top-5 md:top-7 right-4 md:right-5 p-1" onClick={() => handleDeleteSession(session.id)} aria-label="회차 삭제">
+            <button type="button" className="absolute top-5 md:top-7 right-4 md:right-5 p-1" onClick={() => handleDeleteClick(session.id)} aria-label="회차 삭제">
               <Image src="/icon/x.svg" alt="삭제" width={24} height={24} />
             </button>
           )}
@@ -166,3 +174,33 @@ export function DetailInfo() {
 }
 
 export default DetailInfo;
+
+// 삭제 확인 모달 컴포넌트
+const DeleteConfirmModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => {
+  return (
+    <div className="bg-white rounded-2xl p-4 max-w-[430px] w-full">
+      {/* X 버튼 */}
+      <div className="flex justify-end mb-2">
+        <button type="button" onClick={onCancel} aria-label="닫기">
+          <Image src="/icon/x.svg" alt="닫기" width={32} height={32} className="w-7 h-7 md:w-8 md:h-8" />
+        </button>
+      </div>
+
+      {/* 제목 */}
+      <div className="mb-2">
+        {/* 모바일: 한 줄 */}
+        <h3 className="text-[20px] font-bold text-center md:hidden">작성된 내용을 삭제하시겠어요?</h3>
+        {/* PC: 두 줄 */}
+        <div className="hidden md:block">
+          <h3 className="text-[24px] font-bold text-center">작성된 내용을</h3>
+          <h3 className="text-[24px] font-bold text-center">삭제하시겠어요?</h3>
+        </div>
+      </div>
+      <p className="text-[16px] md:text-[18px] text-center text-[#666666] mb-8">삭제한 내용은 복구할 수 없습니다.</p>
+      <div className="flex gap-2">
+        <Button text="취소" variant="outline" className="flex-1" onClick={onCancel} />
+        <Button text="삭제하기" variant="neutral" className="flex-1" onClick={onConfirm} />
+      </div>
+    </div>
+  );
+};

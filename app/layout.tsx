@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import CustomToast from "./lib/CustomToast";
+import { Modal } from "./lib/Modal";
 
 const pretendard = localFont({
   src: "../public/fonts/pretendard/PretendardVariable.woff2",
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="ko" className={pretendard.variable}>
       <body className={pretendard.className}>
         <CustomToast />
+        <Modal />
         {children}
       </body>
     </html>
