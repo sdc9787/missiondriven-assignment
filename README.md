@@ -39,11 +39,3 @@ http://localhost:3000 접속
 ```bash
 docker compose up --build
 ```
-
-## 주요 기능
-
-- **Textarea**: 자동 높이 조절 (130px~350px), 글자수 카운터, 유효성 검증
-- **Category Modal**: 최대 2개 선택, 임시 상태 관리
-- **Detail Info Modal**: 날짜/시간 선택, Zustand 상태 관리
-- **Image Upload**: 대표 이미지 + 추가 이미지 (최대 5개)
-- **Responsive Design**: Tailwind CSS 4 기반
