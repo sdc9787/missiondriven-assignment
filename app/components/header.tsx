@@ -14,7 +14,7 @@ export default function Header({ view, onBack, onNext, nextDisabled = false }: H
   return (
     <>
       {/* 모바일: 상단 헤더 (제목만) */}
-      <header className="py-[15px] border-b border-[#d7d7d7]">
+      <header className="z-10 fixed top-0 left-0 right-0 py-[15px] border-b border-[#d7d7d7] bg-white z-50">
         <div className="px-5 flex items-center justify-center md:mx-auto md:max-w-[1100px]">
           {/* 뒤로가기 버튼 */}
           <div className="flex w-[33.333%]">
@@ -41,7 +41,7 @@ export default function Header({ view, onBack, onNext, nextDisabled = false }: H
       </header>
 
       {/* 모바일: 하단 고정 버튼 */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-[#d7d7d7] md:hidden">
+      <div className="z-10 fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-[#d7d7d7] md:hidden">
         <Button text="다음으로" variant="primary" disabled={nextDisabled} onClick={onNext} className="w-full"></Button>
       </div>
     </>
