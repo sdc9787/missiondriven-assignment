@@ -13,6 +13,7 @@ export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTex
 
 // 기본 스타일
 const baseClasses = `
+  bg-white
   h-[118px] md:h-[138px]
   w-full px-4 py-3 rounded-lg resize-none
   text-[18px] leading-relaxed font-medium
