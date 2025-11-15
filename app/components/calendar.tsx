@@ -48,7 +48,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
             button_previous: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
             button_next: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
             month_grid: "w-full border-collapse border-spacing-0",
-            weekdays: "flex mb-3",
+            weekdays: "flex",
             weekday: "text-black font-semibold text-[16px] flex-1 text-center py-2",
             week: "flex w-full",
             day: "flex-1 text-center flex items-center justify-center [&[aria-selected='true']_button]:hover:bg-[#03C124]!",
