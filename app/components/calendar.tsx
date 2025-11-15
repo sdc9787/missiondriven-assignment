@@ -11,9 +11,11 @@ interface CalendarComponentProps {
   value?: Date | null;
   onChange?: (date: Date) => void;
   className?: string;
+  minDate?: Date | null;
+  maxDate?: Date | null;
 }
 
-export function CalendarComponent({ value = null, onChange, className = "" }: CalendarComponentProps) {
+export function CalendarComponent({ value = null, onChange, className = "", minDate = null, maxDate = null }: CalendarComponentProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(value || new Date());
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -26,6 +28,32 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
     }
   };
 
+  // 날짜 비활성화 조건 설정
+  const getDisabledDates = () => {
+    const conditions: any[] = [];
+
+    // 오늘 이전 날짜는 비활성화
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    conditions.push({ before: today });
+
+    // minDate가 있으면 그 이전 날짜 비활성화
+    if (minDate) {
+      const min = new Date(minDate);
+      min.setHours(0, 0, 0, 0);
+      conditions.push({ before: min });
+    }
+
+    // maxDate가 있으면 그 이후 날짜 비활성화
+    if (maxDate) {
+      const max = new Date(maxDate);
+      max.setHours(0, 0, 0, 0);
+      conditions.push({ after: max });
+    }
+
+    return conditions;
+  };
+
   return (
     <div className={className}>
       {/* 달력 */}
@@ -36,7 +64,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
           onSelect={handleDateSelect}
           locale={ko}
           showOutsideDays={true}
-          disabled={{ before: new Date() }}
+          disabled={getDisabledDates()}
           className="font-pretendard!"
           classNames={{
             root: "px-4 relative",
@@ -56,7 +84,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
             selected: "bg-[#03C124]! text-white! font-bold! rounded-lg z-10",
             today: "",
             outside: "text-[#8f8f8f]",
-            disabled: "text-[#8f8f8f] opacity-50",
+            disabled: "text-[#E5E5E5]! opacity-100!",
           }}
           components={{
             Chevron: ({ orientation }) => {

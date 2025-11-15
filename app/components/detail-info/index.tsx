@@ -59,6 +59,28 @@ export function DetailInfo() {
   // 날짜 선택 핸들러
   const handleDateClick = (sessionId: number, buttonRef: React.RefObject<HTMLButtonElement | null>) => {
     const session = sessions.find((s) => s.id === sessionId);
+    const currentIndex = sessions.findIndex((s) => s.id === sessionId);
+
+    // 앞뒤 회차의 날짜 가져오기
+    let minDate: Date | null = null;
+    let maxDate: Date | null = null;
+
+    // 이전 회차가 있고 날짜가 설정되어 있으면
+    if (currentIndex > 0 && sessions[currentIndex - 1].date) {
+      const prevDate = new Date(sessions[currentIndex - 1].date!);
+      // 이전 회차 날짜 다음날부터 선택 가능
+      minDate = new Date(prevDate);
+      minDate.setDate(minDate.getDate() + 1);
+    }
+
+    // 다음 회차가 있고 날짜가 설정되어 있으면
+    if (currentIndex < sessions.length - 1 && sessions[currentIndex + 1].date) {
+      const nextDate = new Date(sessions[currentIndex + 1].date!);
+      // 다음 회차 날짜 전날까지 선택 가능
+      maxDate = new Date(nextDate);
+      maxDate.setDate(maxDate.getDate() - 1);
+    }
+
     // 모달 오픈
     openModal(
       <CalendarComponent
@@ -67,6 +89,8 @@ export function DetailInfo() {
           updateSession(sessionId, "date", date);
           closeModal();
         }}
+        minDate={minDate}
+        maxDate={maxDate}
       />,
       buttonRef,
       undefined,
