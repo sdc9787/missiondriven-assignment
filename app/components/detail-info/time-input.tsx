@@ -20,12 +20,6 @@ export function TimeInput({ label, time, onUpdate, isEndTime = false, startTime,
     if (isEndTime && startTime && isStartAfterEnd(startTime, newTime)) {
       toast.error("시작 시간보다 종료시간은 빠를 수 없습니다.");
       onUpdate(addOneHour(startTime));
-    }
-    // 시작 시간인 경우: 종료 시간보다 늦으면 종료 시간을 자동 조정
-    else if (!isEndTime && endTime && onEndTimeUpdate && isStartAfterEnd(newTime, endTime)) {
-      toast.error("시작 시간보다 종료시간은 빠를 수 없습니다.");
-      onUpdate(newTime);
-      onEndTimeUpdate(addOneHour(newTime));
     } else {
       onUpdate(newTime);
     }
@@ -56,14 +50,17 @@ export function TimeInput({ label, time, onUpdate, isEndTime = false, startTime,
             const value = e.target.value.replace(/[^0-9]/g, "");
             if (value === "") {
               onUpdate({ ...time, hour: "" });
-            } else if (parseInt(value) >= 1 && parseInt(value) <= 12) {
-              onUpdate({ ...time, hour: value });
+            } else {
+              const numValue = parseInt(value);
+              if (numValue >= 0 && numValue <= 12) {
+                onUpdate({ ...time, hour: value });
+              }
             }
           }}
           onBlur={(e) => {
             const value = e.target.value;
-            if (value === "") {
-              const defaultHour = isEndTime && startTime ? addOneHour(startTime).hour : "10";
+            if (value === "" || value === "0") {
+              const defaultHour = "01";
               const newTime = { ...time, hour: defaultHour };
               validateAndUpdate(newTime);
             } else {

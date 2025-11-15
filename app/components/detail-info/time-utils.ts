@@ -34,6 +34,15 @@ export const addOneHour = (time: TimeData): TimeData => {
   let hour = parseInt(time.hour);
   let period = time.period;
 
+  // hour가 0이거나 NaN인 경우 1시로 설정
+  if (isNaN(hour) || hour === 0) {
+    return {
+      period,
+      hour: "01",
+      minute: time.minute,
+    };
+  }
+
   // 오전 11시 -> 오후 12시
   if (hour === 11 && period === "오전") {
     return {

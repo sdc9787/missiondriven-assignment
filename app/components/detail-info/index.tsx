@@ -95,17 +95,18 @@ export function DetailInfo() {
         if (field === "startTime") {
           const isPeriodChanged = value.period !== session.startTime.period;
           const isHourChanged = value.hour !== session.startTime.hour;
+          const isMinuteChanged = value.minute !== session.startTime.minute;
 
           // 오전/오후 토글만 변경된 경우
-          if (isPeriodChanged && !isHourChanged && value.minute === session.startTime.minute) {
+          if (isPeriodChanged && !isHourChanged && !isMinuteChanged) {
             // 종료 시간의 오전/오후도 동일하게 변경
             updatedSession.endTime = {
               ...session.endTime,
               period: value.period,
             };
           }
-          // 시각(hour)이 변경된 경우
-          else if (isHourChanged || isPeriodChanged) {
+          // 시각(hour 또는 minute)이 변경된 경우
+          else if (isHourChanged || isMinuteChanged || isPeriodChanged) {
             // 종료 시간을 시작 시간 +1시간으로 자동 설정
             updatedSession.endTime = addOneHour(value);
           }
