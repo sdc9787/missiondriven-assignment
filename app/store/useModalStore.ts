@@ -28,9 +28,10 @@ export const useModalStore = create<ModalStore>((set) => ({
 
     if (ref?.current && type !== "bottom") {
       const rect = ref.current.getBoundingClientRect();
+      const calendarWidth = window.innerWidth >= 768 ? 330 : 280;
       finalPosition = {
-        top: rect.top + window.scrollY + rect.height + (position?.top ?? 0),
-        left: rect.left + window.scrollX + (position?.left ?? 0),
+        top: rect.top + window.scrollY + rect.height + 4 + (position?.top ?? 0),
+        left: rect.right + window.scrollX - calendarWidth + (position?.left ?? 0),
       };
       finalType = "position";
     } else if (position && type !== "bottom") {

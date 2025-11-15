@@ -18,15 +18,18 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
-    if (date && onChange) {
-      onChange(date);
+  };
+
+  const handleConfirm = () => {
+    if (selectedDate && onChange) {
+      onChange(selectedDate);
     }
   };
 
   return (
     <div className={className}>
       {/* 달력 */}
-      <div className="bg-white w-[280px] md:w-[330px] h-full">
+      <div className="bg-white w-[280px] md:w-[330px] h-full rounded-lg shadow-lg">
         <DayPicker
           mode="single"
           selected={selectedDate}
@@ -36,12 +39,12 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
           disabled={{ before: new Date() }}
           className="font-pretendard!"
           classNames={{
-            root: "px-4 py-5 relative",
+            root: "px-4 relative",
             months: "flex flex-col",
             month: "w-full",
             month_caption: "flex justify-start items-center py-4 relative",
             caption_label: "text-[16px] font-semibold text-black",
-            nav: "flex items-center gap-[2px] absolute top-8 right-4 z-10",
+            nav: "flex items-center gap-[2px] absolute top-3 right-4 z-10",
             button_previous: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
             button_next: "h-8 w-8 bg-white border border-[#e5e5e5] rounded-lg hover:bg-[#f5f5f5] flex items-center justify-center cursor-pointer",
             month_grid: "w-full border-collapse border-spacing-0",
@@ -64,11 +67,10 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
             },
           }}
         />
-      </div>
-
-      {/* 선택 완료 버튼 */}
-      <div className="w-[280px] md:w-[330px]">
-        <Button text="선택 완료" variant="primary" className="w-full" disabled={!selectedDate} />
+        {/* 선택 완료 버튼 */}
+        <div className="w-[280px] md:w-[330px] p-4">
+          <Button text="선택 완료" variant="primary" className="w-full" disabled={!selectedDate} onClick={handleConfirm} />
+        </div>
       </div>
     </div>
   );

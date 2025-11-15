@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "./button";
 import Textarea from "./textarea";
 import Image from "next/image";
 import { useModalStore } from "../store/useModalStore";
+import CalendarComponent from "./calendar";
 
 interface Session {
   id: number;
-  date: string;
+  date: Date | null;
   startTime: { period: string; hour: string; minute: string };
   endTime: { period: string; hour: string; minute: string };
   description: string;
@@ -18,19 +19,21 @@ export function DetailInfo() {
   const [sessions, setSessions] = useState<Session[]>([
     {
       id: 1,
-      date: "",
+      date: null,
       startTime: { period: "오전", hour: "10", minute: "00" },
       endTime: { period: "오전", hour: "11", minute: "00" },
       description: "",
     },
   ]);
 
+  // Modal store
   const { open: openModal, close: closeModal } = useModalStore();
 
+  // 회차 추가 함수
   const handleAddSession = () => {
     const newSession: Session = {
       id: Date.now(),
-      date: "",
+      date: null,
       startTime: { period: "오전", hour: "10", minute: "00" },
       endTime: { period: "오전", hour: "11", minute: "00" },
       description: "",
@@ -38,15 +41,45 @@ export function DetailInfo() {
     setSessions([...sessions, newSession]);
   };
 
+  // 세션 삭제 함수
   const handleDeleteSession = (id: number) => {
     setSessions(sessions.filter((session) => session.id !== id));
     closeModal();
   };
 
+  // 삭제 버튼 핸들러
   const handleDeleteClick = (id: number) => {
     openModal(<DeleteConfirmModal onConfirm={() => handleDeleteSession(id)} onCancel={closeModal} />, undefined, undefined, "center");
   };
 
+  // 날짜 선택 핸들러
+  const handleDateClick = (sessionId: number, buttonRef: React.RefObject<HTMLButtonElement | null>) => {
+    const session = sessions.find((s) => s.id === sessionId);
+    // 모달 오픈
+    openModal(
+      <CalendarComponent
+        value={session?.date || null}
+        onChange={(date) => {
+          updateSession(sessionId, "date", date);
+          closeModal();
+        }}
+      />,
+      buttonRef,
+      undefined,
+      "position"
+    );
+  };
+
+  // 날짜 포맷 함수
+  const formatDate = (date: Date | null) => {
+    if (!date) return "날짜를 선택해주세요";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+  // 세션 정보 업데이트 함수
   const updateSession = (id: number, field: string, value: any) => {
     setSessions(sessions.map((session) => (session.id === id ? { ...session, [field]: value } : session)));
   };
@@ -71,7 +104,7 @@ export function DetailInfo() {
           {/* 날짜 선택 */}
           <div className="flex items-center gap-3 md:gap-6 mb-4">
             <span className="text-[16px] md:text-[18px] font-semibold text-[#565656] whitespace-nowrap">날짜 선택</span>
-            <button className="flex-1 text-center px-4 py-[14px] text-[16px] md:text-[20px]  md:font-medium text-[#8f8f8f] bg-white border border-[#e5e5e5] rounded-lg">날짜를 선택해주세요</button>
+            <DateSelectButton sessionId={session.id} date={session.date} onDateClick={handleDateClick} formatDate={formatDate} />
           </div>
 
           {/* 시작 시간 */}
@@ -174,6 +207,17 @@ export function DetailInfo() {
 }
 
 export default DetailInfo;
+
+// 날짜 선택 버튼 컴포넌트
+const DateSelectButton = ({ sessionId, date, onDateClick, formatDate }: { sessionId: number; date: Date | null; onDateClick: (sessionId: number, buttonRef: React.RefObject<HTMLButtonElement | null>) => void; formatDate: (date: Date | null) => string }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  return (
+    <button ref={buttonRef} type="button" onClick={() => onDateClick(sessionId, buttonRef)} className={`flex-1 text-center px-4 py-[14px] text-[16px] md:text-[20px] md:font-medium bg-white border border-[#e5e5e5] rounded-lg ${date ? "text-[#323232]" : "text-[#8f8f8f]"}`}>
+      {formatDate(date)}
+    </button>
+  );
+};
 
 // 삭제 확인 모달 컴포넌트
 const DeleteConfirmModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => {
