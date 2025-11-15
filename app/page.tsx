@@ -5,6 +5,7 @@ import AdditionalImages from "./components/additional-images";
 import { Category, CategoryModal } from "./components/category";
 import Header from "./components/header";
 import RepresentativeImage from "./components/representative-image";
+import toast from "react-hot-toast";
 
 export default function Main() {
   const [view, setView] = useState<"form" | "category">("form"); // 현재 뷰 상태
@@ -26,6 +27,7 @@ export default function Main() {
       } else {
         // 선택되지 않은 경우 추가 (최대 2개)
         if (prev.length >= 2) {
+          toast("최대 2개의 카테고리만 선택할 수 있습니다.");
           return prev; // 이미 2개가 선택되어 있으면 추가하지 않음
         }
         return [...prev, category];

@@ -85,3 +85,15 @@ textarea,
 input {
   font-family: var(--font-pretendard, Arial, Helvetica, sans-serif);
 }
+
+/* Toast 위치 조정 - 모바일에서만 하단 버튼 위에 표시 */
+.custom-toast-container {
+  bottom: 100px !important;
+}
+
+/* 데스크톱에서는 기본 위치 */
+@media (min-width: 768px) {
+  .custom-toast-container {
+    bottom: 40px !important;
+  }
+}
