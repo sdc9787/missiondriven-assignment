@@ -22,7 +22,7 @@ export default function Header({ view, onBack }: HeaderProps) {
             </button>
             {/* 데스크톱: 나가기 버튼 */}
             <div className="hidden md:block">
-              <Button onClick={onBack} text="나가기" variant="neutral" disabled></Button>
+              <Button onClick={onBack} text="나가기" variant="outline"></Button>
             </div>
           </div>
           <h1 className="text-2xl font-bold text-center absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex-[1_1_33.333%]">{view === "form" ? "과제" : "카테고리"}</h1>
