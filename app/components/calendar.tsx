@@ -67,7 +67,7 @@ export function CalendarComponent({ value = null, onChange, className = "" }: Ca
       </div>
 
       {/* 선택 완료 버튼 */}
-      <div className="px-4 py-4  w-[280px] md:w-[330px]">
+      <div className="w-[280px] md:w-[330px]">
         <Button text="선택 완료" variant="primary" className="w-full" disabled={!selectedDate} />
       </div>
     </div>
