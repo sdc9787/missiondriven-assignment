@@ -9,14 +9,17 @@ import RepresentativeImage from "./components/representative-image";
 export default function Main() {
   const [view, setView] = useState<"form" | "category">("form"); // 현재 뷰 상태
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // 선택된 카테고리들 (최대 2개)
+  const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([]); // 임시 선택 카테고리
 
   const handleOpenCategoryModal = () => {
+    // 모달 열 때 현재 선택된 카테고리를 임시 상태에 복사
+    setTempSelectedCategories([...selectedCategories]);
     setView("category");
   };
 
-  // 카테고리 선택/해제 핸들러
+  // 카테고리 선택/해제 핸들러 (임시 상태에서 작업)
   const handleToggleCategory = (category: string) => {
-    setSelectedCategories((prev) => {
+    setTempSelectedCategories((prev) => {
       if (prev.includes(category)) {
         // 이미 선택된 경우 제거
         return prev.filter((c) => c !== category);
@@ -30,9 +33,23 @@ export default function Main() {
     });
   };
 
+  // 나가기 버튼: 선택 취소하고 폼으로 돌아가기
+  const handleBack = () => {
+    setTempSelectedCategories([]); // 임시 선택 초기화
+    setView("form");
+  };
+
+  // 다음으로 버튼: 선택 저장하고 폼으로 돌아가기
+  const handleNext = () => {
+    if (view === "category" && tempSelectedCategories.length > 0) {
+      setSelectedCategories([...tempSelectedCategories]); // 임시 선택을 실제 선택으로 저장
+    }
+    setView("form");
+  };
+
   return (
     <div>
-      <Header view={view} onBack={() => setView("form")} />
+      <Header view={view} onBack={handleBack} onNext={handleNext} nextDisabled={view === "category" ? tempSelectedCategories.length === 0 : false} />
 
       {view === "form" && (
         <div className="flex justify-center items-start max-w-[1100px] mx-auto">
@@ -46,7 +63,7 @@ export default function Main() {
         </div>
       )}
 
-      {view === "category" && <CategoryModal selectedCategories={selectedCategories} onToggle={handleToggleCategory} />}
+      {view === "category" && <CategoryModal selectedCategories={tempSelectedCategories} onToggle={handleToggleCategory} />}
     </div>
   );
 }

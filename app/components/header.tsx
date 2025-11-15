@@ -6,9 +6,11 @@ import Button from "./button";
 interface HeaderProps {
   view: "form" | "category";
   onBack?: () => void;
+  onNext?: () => void;
+  nextDisabled?: boolean;
 }
 
-export default function Header({ view, onBack }: HeaderProps) {
+export default function Header({ view, onBack, onNext, nextDisabled = false }: HeaderProps) {
   return (
     <>
       {/* 모바일: 상단 헤더 (제목만) */}
@@ -28,14 +30,14 @@ export default function Header({ view, onBack }: HeaderProps) {
           <h1 className="text-2xl font-bold text-center absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex-[1_1_33.333%]">{view === "form" ? "과제" : "카테고리"}</h1>
           {/* 데스크톱: 헤더 내 버튼 */}
           <div className="hidden md:flex md:flex-[1_1_33.333%] md:justify-end">
-            <Button text="다음으로" variant="neutral" disabled></Button>
+            <Button text="다음으로" variant="neutral" disabled={nextDisabled} onClick={onNext}></Button>
           </div>
         </div>
       </header>
 
       {/* 모바일: 하단 고정 버튼 */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-[#d7d7d7] md:hidden">
-        <Button text="다음으로" variant="neutral" disabled className="w-full"></Button>
+        <Button text="다음으로" variant="neutral" disabled={nextDisabled} onClick={onNext} className="w-full"></Button>
       </div>
     </>
   );
