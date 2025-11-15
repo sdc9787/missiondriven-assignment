@@ -22,7 +22,7 @@ export default function Main() {
   const handleToggleCategory = (category: string) => {
     if (tempSelectedCategories.length >= 2 && !tempSelectedCategories.includes(category)) {
       // 이미 2개가 선택된 상태에서 새로운 카테고리를 선택하려고 할 때
-      toast.error("최대 2개의 카테고리만 선택할 수 있습니다.");
+      toast.error("최대 2개까지만 선택 가능해요");
       return;
     }
     setTempSelectedCategories((prev) => {
