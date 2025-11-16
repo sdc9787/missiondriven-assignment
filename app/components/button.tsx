@@ -10,6 +10,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 // 기본 스타일 + 반응형 크기 조정
 const baseClasses = `
+cursor-pointer
   font-semibold transition-all
   px-3 py-2 text-[16px] rounded-[4px]
   md:px-5 md:py-3 md:text-[18px] md:rounded-[6px]

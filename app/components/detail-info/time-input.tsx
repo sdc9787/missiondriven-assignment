@@ -33,7 +33,7 @@ export function TimeInput({ label, time, onUpdate, isEndTime = false, startTime 
         {/* 오전/오후 토글 */}
         <button
           type="button"
-          className="px-2 md:px-3 py-[7px] md:py-[5px] text-[14px] md:text-[16px] font-medium bg-btn-outline-bg text-[#323232] border border-[#e5e5e5] rounded-md"
+          className="cursor-pointer px-2 md:px-3 py-[7px] md:py-[5px] text-[14px] md:text-[16px] font-medium bg-btn-outline-bg text-[#323232] border border-[#e5e5e5] rounded-md"
           onClick={() => {
             const newPeriod = time.period === "오전" ? "오후" : "오전";
             const newTime = { ...time, period: newPeriod };
